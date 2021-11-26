@@ -27,14 +27,3 @@ class RobotDriveController:
         self.twist.linear.x = self.velocity
         self.twist.angular.z = self.angular
         self.cmd_vel_pub.publish(self.twist)
-
-
-# if __name__ == "__main__":
-#     rospy.init_node('robot_drive_controller')
-#     robotDrivenController = RobotDriveController()
-#     robotDrivenController.set_velocity(1)
-#     robotDrivenController.drive()
-#
-#     while not rospy.is_shutdown():
-#         robotDrivenController.cmd_vel_pub.publish(robotDrivenController.twist)
-#         robotDrivenController.rate.sleep()
