@@ -12,7 +12,7 @@ from go_7sec import Go_7sec
 import time
 from detect_box import Detectbox
 from right_lane_follower import Right_lane_follower
-from robot_drive_controller import RobotDriveController
+from detect_sign import Detect_Sign
 
 class BlockingBarState(State):
     def __init__(self):
@@ -251,10 +251,12 @@ class T_course(State):
         line = LineTracer2()
         stop_line = DetectStopLine()
         stop_line_count = 7
+        stop_sign_count=0
         tmp_time = time.time() + 0.1
         start_time = time.time() + 7
         go = Go_7sec()
         box=Detectbox()
+        sign=Detect_Sign()
         turn_time = time.time() + 100000
         change_right_follow = time.time() + 100000
         right_follow_time=time.time()+10000
@@ -282,7 +284,7 @@ class T_course(State):
                 err=-float(cx)/100
                 rate = rospy.Rate(20)
 
-                if stop_line.area>11500:
+                if stop_line.area>11000:
                     line.robot_controller.set_velocity(0)
                     line.robot_controller.set_angular(0)
                     stop_line_count = stop_line_count + 1
@@ -312,9 +314,7 @@ class T_course(State):
                     line.robot_controller.set_angular(0)
                     line.robot_controller.set_velocity(0)
                     line.robot_controller.drive()
-                    right_follow_time = time.time() + 23
                     break
-
 
             while True:
                 print "leffollow"
@@ -328,8 +328,16 @@ class T_course(State):
                 line.robot_controller.set_angular(err)
                 line.robot_controller.drive()
 
-                if time.time() - right_follow_time > 0:
-                    left_follow_time = time.time() + 40
+                if len(sign.contours) > 0:  # stop_sign_detect
+                    print "stop"
+                    stop_sign_count = stop_sign_count + 1
+                    print stop_sign_count
+                    line.robot_controller.set_velocity(0)
+                    line.robot_controller.set_angular(0)
+                    rospy.sleep(3)
+
+                if stop_sign_count == 1:
+                    right_follow_time = time.time() + 20
                     break
 
             while True:
@@ -351,8 +359,9 @@ class T_course(State):
                     line.robot_controller.drive()
                     rospy.sleep(1)
 
-                if time.time() - left_follow_time > 0:
+                if time.time() - right_follow_time >0:
                     break
+
             while True:
                 print "leffollow"
                 cx = (line.cx_white + 170) / 2 - 230
@@ -364,7 +373,7 @@ class T_course(State):
                     line.robot_controller.set_velocity(0.8)
                 line.robot_controller.set_angular(err)
                 line.robot_controller.drive()
-                
+
                 if stop_line.area>11500:
                     line.robot_controller.set_velocity(0)
                     line.robot_controller.set_angular(0)
