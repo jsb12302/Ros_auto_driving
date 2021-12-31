@@ -36,7 +36,7 @@ Camera, 센서 데이터 처리를 활용한 주행시험장 내 자율 주행 �
 
 ## 인식 결과
 ### Detect Line
-![Detect Line](image/차선 인식.png)
+![Detect Line](image/Detect Line.png)
 
 ### 장애물 인식
 ![장애물 인식](image/장애물 인식.png)
