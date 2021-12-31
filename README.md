@@ -35,8 +35,8 @@ Camera, 센서 데이터 처리를 활용한 주행시험장 내 자율 주행 �
 ![State Machine Diagram](image/StateMachine.png)
 
 ## 인식 결과
-### Detect Line
-(image/차선인식.png)
+### 차선 인식
+![image](image/차선인식.png)
 
 ### 장애물 인식
 ![장애물 인식](image/장애물인식.png)
