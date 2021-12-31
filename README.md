@@ -49,4 +49,4 @@ Camera, 센서 데이터 처리를 활용한 주행시험장 내 자율 주행 �
 
 
 ## 시연 영상
-<iframe width="640" height="360" src="https://youtu.be/_tIetEqs9Ts" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+[![Video Label](image/ScreenShot.png)](https://youtu.be/_tIetEqs9Ts)
